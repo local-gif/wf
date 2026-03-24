@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Registration</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: white;
+        }
+        .card {
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .header-box {
+            background-color: green;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+        .form-control {
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .btn-custom {
+            background-color: green;
+            color: white;
+            border-radius: 8px;
+        }
+        .btn-custom:hover {
+            background-color: #0b5ed7;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow" style="width: 900px;">
+
+        <div class="header-box">
+            <h4 class="mb-0">Employee Registration</h4>
+        </div>
+
+        <div class="p-4">
+            <form onsubmit="return validateForm()" onreset="resetForm()">
+
+                <div class="alert d-none text-center" id="alertMessage"></div>
+
+                <div class="mb-3">
+                    <label>Employee Name</label>
+                    <input type="text" id="empName" class="form-control" placeholder="Enter full name">
+                    <small class="text-danger" id="empNameError"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label>Email Address</label>
+                    <input type="text" id="email" class="form-control" placeholder="Enter email address">
+                    <small class="text-danger" id="emailError"></small>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>Employee Number</label>
+                        <input type="text" id="empNo" class="form-control" placeholder="EMP001">
+                        <small class="text-danger" id="empNoError"></small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Salary</label>
+                        <input type="number" id="salary" class="form-control" placeholder="Enter salary">
+                        <small class="text-danger" id="salaryError"></small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label>Date of Birth</label>
+                    <input type="date" id="dob" class="form-control">
+                    <small class="text-danger" id="dobError"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label>Joining Date</label>
+                    <input type="date" id="joinDate" class="form-control">
+                    <small class="text-danger" id="dateError"></small>
+                </div>
+
+                <button type="submit" class="btn btn-custom w-100 mb-2">Submit</button>
+                <button type="reset" class="btn btn-light w-100">Reset</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function validateForm() {
+
+    let empName = document.getElementById("empName").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let empNo = document.getElementById("empNo").value.trim();
+    let salary = document.getElementById("salary").value.trim();
+    let dob = document.getElementById("dob").value;
+    let joinDate = document.getElementById("joinDate").value;
+
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let alertBox = document.getElementById("alertMessage");
+
+    document.querySelectorAll("small").forEach(e => e.innerHTML = "");
+    alertBox.classList.add("d-none");
+
+    let isValid = true;
+
+    if (empName === "") {
+        empNameError.innerHTML = "Employee name required";
+        isValid = false;
+    }
+
+    if (!emailPattern.test(email)) {
+        emailError.innerHTML = "Enter valid email address";
+        isValid = false;
+    }
+
+    if (empNo === "") {
+        empNoError.innerHTML = "Employee number required";
+        isValid = false;
+    }
+
+    if (salary === "" || salary <= 0) {
+        salaryError.innerHTML = "Enter valid salary";
+        isValid = false;
+    }
+
+    if (dob === "") {
+        dobError.innerHTML = "Date of birth required";
+        isValid = false;
+    }
+
+    /* Joining Date Validation: Current date to next 5 months */
+    if (joinDate === "") {
+        dateError.innerHTML = "Joining date required";
+        isValid = false;
+    } else {
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        let maxDate = new Date();
+        maxDate.setMonth(maxDate.getMonth() + 5);
+
+        let selectedJoinDate = new Date(joinDate);
+
+        if (selectedJoinDate < today) {
+            dateError.innerHTML = "Joining date cannot be in the past";
+            isValid = false;
+        } else if (selectedJoinDate > maxDate) {
+            dateError.innerHTML = "Joining date cannot be more than 5 months from today";
+            isValid = false;
+        }
+    }
+
+    if (isValid) {
+        alertBox.className = "alert alert-success text-center";
+        alertBox.innerHTML = "Employee Registration Successful!";
+        alertBox.classList.remove("d-none");
+    } else {
+        alertBox.className = "alert alert-danger text-center";
+        alertBox.innerHTML = "Please fix the errors above";
+        alertBox.classList.remove("d-none");
+    }
+
+    return false;
+}
+
+function resetForm() {
+    document.querySelectorAll("small").forEach(e => e.innerHTML = "");
+    document.getElementById("alertMessage").classList.add("d-none");
+}
+</script>
+
+</body>
+</html>
+

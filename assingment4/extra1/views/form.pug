@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title Employee Form
+  body
+    h1 Enter Employee Details
+    form(action="/submit" method="POST")
+      div
+        label Name:
+        input(type="text" name="name" required)
+      div
+        label Email:
+        input(type="email" name="email" required)
+      div
+        label Department:
+        input(type="text" name="department" required)
+      div
+        label Salary:
+        input(type="number" name="salary" required)
+      div
+        button(type="submit") Submit

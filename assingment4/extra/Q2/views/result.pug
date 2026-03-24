@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title Employee Details
+  body
+    h1 Submitted Employee Details
+
+    p
+      strong Name:
+      |  #{employee.name}
+
+    p
+      strong Email:
+      |  #{employee.email}
+
+    p
+      strong Department:
+      |  #{employee.department}
+
+    p
+      strong Salary:
+      |  #{employee.salary}
+
+    br
+    a(href="/") Back to Form
